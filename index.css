@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&family=Roboto&display=swap');
+@keyframes vibrate {
+    0% { transform: translateX(0); }
+    10% { transform: translateX(-5px) rotate(-2deg); }
+    20% { transform: translateX(5px) rotate(2deg); }
+    30% { transform: translateX(-5px) rotate(-2deg); }
+    40% { transform: translateX(5px) rotate(2deg); }
+    50% { transform: translateX(-5px) rotate(-2deg); }
+    60% { transform: translateX(5px) rotate(2deg); }
+    70% { transform: translateX(-5px) rotate(-2deg); }
+    80% { transform: translateX(5px) rotate(2deg); }
+    90% { transform: translateX(-5px) rotate(-2deg); }
+    100% { transform: translateX(0); }
+}
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.header {
+    background-image: url("assets/paisaje-header.webp");
+    background-repeat: no-repeat;
+    /* Evita que la imagen de fondo se repita */
+    background-size: cover;
+    /* Ajusta el tamaño de la imagen de fondo para cubrir todo el ancho y alto del contenedor */
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    padding: 48px 48px 28px 48px;
+}
+
+.title-book-it {
+    font-size: 72px;
+    font-family: 'Pacifico', cursive;
+    color: wheat;
+    padding-bottom: 16px;
+}
+
+.message-container {
+    padding: 16px 0 0 0;
+    color: white;
+}
+
+.message-container-title {
+    font-family: 'Dancing Script', cursive;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.sub-message {
+    font-size: 18px;
+    padding: 9px 0 8px 3px;
+
+}
+
+.container-filters {
+    display: flex;
+    color: transparent;
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px;
+}
+
+.filters-grid {
+    display: flex;
+    column-gap: 40px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.elementos-filters {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+    max-width: 200px;
+    height: 38px;
+    flex: 1;
+    padding-left: 24px;
+}
+
+/* CSS */
+/* Para darle un estilo personalizado al <select> */
+select, option {
+    /* Agrega estilos de borde, fondo, color, etc., según tus preferencias */
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #333;
+    /* Ajusta otros estilos según tus necesidades */
+}
+
+#clear {
+    flex: 1;
+    max-width: 91px;
+    height: 38px;
+    font-size: 18px;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid white;
+    background-color: transparent;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    animation-duration: 0.5s; /* Duración de la animación */
+    animation-timing-function: ease-out; /* Ajusta la curva de aceleración */
+}
+#clear:active {
+    animation-name: vibrate
+}
+
+.icon-element-entrada{
+    background-image: url("data:image/svg+xml,<svg fill-opacity='0.7' width='17' height='20' viewBox='0 0 17 20' fill='none' xmlns='http://www.w3.org/2000/svg'> <path d='M5.81286 11.5469C5.53948 11.852 5.53948 12.3467 5.81286 12.6518C6.08625 12.9569 6.52945 12.9568 6.8028 12.6517L8.6837 10.5525C8.95915 10.2451 8.95358 9.74889 8.6837 9.44768L6.80277 7.34845C6.52942 7.04333 6.08621 7.04337 5.81283 7.34845C5.53944 7.65353 5.53944 8.14822 5.81283 8.45334L6.49876 9.21885L0.699999 9.21881C0.313425 9.21881 0 9.56858 0 10.0001C0 10.4315 0.31339 10.7813 0.699999 10.7813L6.49879 10.7814L5.81286 11.5469Z' fill='black'/> <path d='M16.1698 0H4.75981C4.3732 0 4.05981 0.349766 4.05981 0.78125V3.75C4.05981 4.18148 4.3732 4.53125 4.75981 4.53125C5.14642 4.53125 5.45981 4.18148 5.45981 3.75V1.5625H15.4698V18.4375H5.45981V16.25C5.45981 15.8185 5.14642 15.4688 4.75981 15.4688C4.3732 15.4688 4.05981 15.8185 4.05981 16.25V19.2188C4.05981 19.6502 4.3732 20 4.75981 20H16.1698C16.5564 20 16.8698 19.6502 16.8698 19.2188V0.78125C16.8698 0.349766 16.5564 0 16.1698 0Z' fill='black'/> </svg>");
+    background-repeat: no-repeat;
+    background-position-x: 5px;
+    background-position-y: center;
+}
+
+.icon-element-salida{
+    background-image: url("data:image/svg+xml,<svg fill-opacity='0.7' width='17' height='20' viewBox='0 0 17 20' fill='none' xmlns='http://www.w3.org/2000/svg'> <path d='M13.801 11.4266C13.5281 11.7316 13.5281 12.2262 13.801 12.5312C14.0738 12.8363 14.5161 12.8362 14.7889 12.5312L16.6659 10.4323C16.9408 10.125 16.9352 9.62882 16.6659 9.32766L14.7888 7.22879C14.516 6.92372 14.0737 6.92376 13.8009 7.22879C13.5281 7.53381 13.5281 8.02842 13.8009 8.33349L14.4854 9.09887L8.69857 9.09883C8.31278 9.09883 8 9.44854 8 9.87995C8 10.3114 8.31275 10.6611 8.69857 10.6611L14.4855 10.6611L13.801 11.4266Z' fill='black'/> <path d='M0.69839 20H12.0817C12.4674 20 12.78 19.6502 12.78 19.2188V16.25C12.78 15.8185 12.4674 15.4688 12.0817 15.4688C11.696 15.4688 11.3833 15.8185 11.3833 16.25V18.4375H1.39675L1.39675 1.5625H11.3833V3.75C11.3833 4.18148 11.696 4.53125 12.0817 4.53125C12.4674 4.53125 12.78 4.18148 12.78 3.75V0.78125C12.78 0.349766 12.4674 0 12.0817 0H0.69839C0.312685 0 2.91998e-05 0.349766 2.91998e-05 0.78125L2.91998e-05 19.2188C2.91998e-05 19.6502 0.312685 20 0.69839 20Z' fill='black'/> </svg>");
+    background-repeat: no-repeat;
+    background-position-x: 5px;
+    background-position-y: center;
+}
+.icon-element-price{
+    background-image: url("data:image/svg+xml,<svg fill-opacity='0.7' width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'> <path d='M11.8001 10.9C9.53007 10.31 8.80007 9.7 8.80007 8.75C8.80007 7.66 9.81007 6.9 11.5001 6.9C13.2801 6.9 13.9401 7.75 14.0001 9H16.2101C16.1401 7.28 15.0901 5.7 13.0001 5.19V3H10.0001V5.16C8.06007 5.58 6.50007 6.84 6.50007 8.77C6.50007 11.08 8.41007 12.23 11.2001 12.9C13.7001 13.5 14.2001 14.38 14.2001 15.31C14.2001 16 13.7101 17.1 11.5001 17.1C9.44007 17.1 8.63007 16.18 8.52007 15H6.32007C6.44007 17.19 8.08007 18.42 10.0001 18.83V21H13.0001V18.85C14.9501 18.48 16.5001 17.35 16.5001 15.3C16.5001 12.46 14.0701 11.49 11.8001 10.9Z' fill='black'/> </svg>");
+    background-repeat: no-repeat;
+    background-position-x: 5px;
+    background-position-y: center;
+}
+
