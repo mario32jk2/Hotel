@@ -52,6 +52,8 @@
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
+ 
+  
 }
 
 .header {
@@ -184,7 +186,6 @@ option {
 .main-class {
     margin-top: 370px;
     padding-top: 20px;
-    background-color: #FFC58F;
 }
 .container-target-hotels-class {
     display: grid;
@@ -192,11 +193,13 @@ option {
     box-sizing: border-box;
     margin: 20px 20px 0 20px;
     gap: 30px;
+    
 }
 
 .images-hotels {
-    max-width: 470px;
+    width: 470px;
     border-radius: 20px;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.2);
 }
 
 .container-div-bandera {
@@ -208,14 +211,14 @@ option {
 }
 .div-article{
     display: flex;
-    justify-content: space-between;
+    align-items: stretch;
+    
 }
 .button-book-it{
     border-radius: 10px;
     padding: 5px 10px;
     margin-right: 10px;
-    max-width: 91px;
-    height: 38px;
+    margin-left: 40px;
     font-size: 14px;
     color: white;
     border-radius: 10px;

@@ -99,12 +99,13 @@ filterSelect.addEventListener("change", () => {
   getHotels(consultDate);
 });
 
-
 //funcion para eliminar filtros
 const buttonFilter = document.getElementById("clear");
 buttonFilter.addEventListener("click", () => {
   section.innerHTML = "";
   getHotels(json);
 });
+
+
 
 
