@@ -109,3 +109,68 @@ buttonFilter.addEventListener("click", () => {
 
 
 
+// filtro fechas
+const fechaEntrada = document.getElementById("checkIn");
+const fechaSalida = document.getElementById("checkOut");
+
+
+// Obtener fecha actual
+const today = new Date();
+
+// Función para agregar un cero inicial si el número es menor a 10
+function addLeadingZero(number) {
+  return number < 10 ? "0" + number : number;
+}
+
+// Calcular fechas de check-in y check-out predeterminadas
+const day = today.getDate();
+const month = today.getMonth() + 1;
+const year = today.getFullYear();
+const hotelesEntrada = `${year}-${addLeadingZero(month)}-${addLeadingZero(day)}`;
+const hotelesSalida = `${year}-${addLeadingZero(month)}-${addLeadingZero(day + 1)}`;
+
+// Establecer atributos mínimos para los campos de fecha
+fechaEntrada.setAttribute("min", hotelesEntrada);
+fechaSalida.setAttribute("min", hotelesSalida);
+
+// Función para verificar si un hotel está disponible
+function HotelReady(hotels, diffSecons) {
+  const AvailFrom = new Date(hotels.availabilityFrom).getTime();
+  const AvailTo = new Date(hotels.availabilityTo).getTime();
+  const AvailDiff = AvailTo - AvailFrom;
+  return AvailDiff >= diffSecons;
+}
+
+// Función para calcular la diferencia en días y filtrar los hoteles disponibles
+let fechaSalidaSelected = false
+function calculateDifferenceDays() {
+  const OptCheckIn = new Date(fechaEntrada.value).getTime();
+  const OptCheckOut = new Date(fechaSalida.value).getTime();
+
+  if (!fechaSalidaSelected) {
+    return;
+  }
+
+  const DayMillis = 24 * 60 * 60 * 1000; 
+  const diffSecons = Math.round((OptCheckOut - OptCheckIn) / DayMillis) * DayMillis;
+
+  const hotelesDisponibles = json.filter((hotel) => {
+    return HotelReady(hotel, diffSecons);
+  });
+
+  section.innerHTML = "";
+
+  if (hotelesDisponibles.length > 0) {
+    getHotels(hotelesDisponibles);
+  } else {
+    section.innerHTML = "¡Lo siento! No hay hoteles disponibles para este rango de fechas.";
+    
+  }
+}
+
+// Establecer listeners de cambio para los campos de fecha
+fechaEntrada.addEventListener("change", calculateDifferenceDays);
+fechaSalida.addEventListener("change", function () {
+  fechaSalidaSelected = true;
+  calculateDifferenceDays();
+});
