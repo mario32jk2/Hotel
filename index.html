@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Malma</title>
     <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
     <header class="header">
         <h1 class="title-book-it">Book it !</h1>
         <div class="container-filters">
-            <form class="filters-grid">
-                
-                    <input min="NaN-NaN-NaN" max type="date" name="fecha-inicio"  id="fecha-inicio" class="elementos-filters icon-element-entrada">
-                    <input min="NaN-NaN-NaN" max type="date" type="date" name="fecha-final" id="fecha-final" class="elementos-filters icon-element-salida">
-                    <select name="prices" id="prices" class="elementos-filters icon-element-price">
-                        <option value="all" id="precios">All prices</option>
-                        <option value="price1">$</option>
-                        <option value="price2">$$</option>
-                        <option value="price3">$$$</option>
-                        <option value="price4">$$$$</option>
-                    </select>
-                    <input type="reset" name="reset" id="clear" value="Clear" >
-                
+            <form class="filters-grid" id="grid">
+
+                <input  type="date" name="fecha-inicio" id="checkIn"
+                    class="elementos-filters icon-element-entrada">
+                <input type="date" type="date" name="fecha-final" id="checkOut"
+                    class="elementos-filters icon-element-salida">
+                    
+                <select name="prices" id="prices" class="elementos-filters icon-element-price">
+                    <option value="all" id="precios">All prices</option>
+                    <option value="price1" id="price1">$</option>
+                    <option value="price2" id="price2">$$</option>
+                    <option value="price3" id="price3">$$$</option>
+                    <option value="price4" id="price4">$$$$</option>
+                </select>
+                <input type="reset" name="reset" id="clear" value="Clear">
             </form>
         </div>
         <div class="message-container">
@@ -30,6 +34,12 @@
             <p class="sub-message">All sizes hotels of all category prices, in all countries.</p>
         </div>
     </header>
-    <script src="index.js"></script>
+    <main id="main-id" class="main-class">
+        <section id="container-targets-hotels" class="container-target-hotels-class">
+
+        </section>
+    </main>
+    <script type="module" src="./src/hoteles.js"></script>
 </body>
+
 </html>
