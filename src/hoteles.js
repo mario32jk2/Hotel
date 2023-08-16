@@ -53,7 +53,7 @@ async function getHotels(json) {
     const nameCountry = document.createElement("p");
     nameCountry.innerText = hotels.country;
     const imgBandera = document.createElement("img");
-    imgBandera.setAttribute("src", `./assets/${hotels.country}-flag.png`);
+    imgBandera.setAttribute("src", `./assets/${hotels.country}-flags.png`);
     divBandera.appendChild(imgBandera);
     divBandera.appendChild(nameCountry);
     divContainer.appendChild(divBandera);
