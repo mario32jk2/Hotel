@@ -3,12 +3,12 @@ const section = document.getElementById("container-targets-hotels");
 const response = await apiHotels();
 const json = await response.json();
 console.log(json);
-
+let filteredData = json
 function generatecharacterprice(numero) {
   return "$".repeat(numero);
 }
 // CHANGE SYMBOL TO TEXT
-function symbolTxt(text) {
+function symbolToNumber(text) {
   return text.split("$").length - 1;
 }
 
@@ -81,22 +81,117 @@ async function getHotels(json) {
 
 getHotels(json);
 
-//function filterPrices
-const filterSelect = document.getElementById("prices");
+let shouldShowMessage = false;
+function applyFilters() {
+  let tempData = json;
 
-filterSelect.addEventListener("change", () => {
-  let optionsPrices = filterSelect.value;
-  let selectprices = filterSelect.options[filterSelect.selectedIndex];
-  let txtContentent = selectprices.textContent;
-  let changeTxt = symbolTxt(txtContentent);
-  let consultDate = json;
-
-  if (optionsPrices != "all") {
-    consultDate = json.filter((hotels) => hotels.price == changeTxt);
+  
+  // Apply price filter
+  const selectedPrice = filterPrices.value;
+  let priceSelect = filterPrices.options[filterPrices.selectedIndex];
+  const textPreiceSelected = priceSelect.textContent;
+  const changeToNumber = symbolToNumber(textPreiceSelected);
+  if (selectedPrice != "all") {
+    tempData = tempData.filter((hotel) => hotel.price == changeToNumber);
   }
+  // Apply date filter
+  if (dateCheckOutSelected) {
+    const differenceInMilliseconds = calculateDifferenceDays();
+    tempData = tempData.filter((hotel) =>
+      isHotelAvailable(hotel, differenceInMilliseconds)
+    );
+  }
+  filteredData = tempData;
+  shouldShowMessage = filteredData.length > 0;
 
+  const messageContainer = document.getElementById("message-container");
+  if (filteredData.length == 0) {
+    messageContainer.textContent = "Sorry we don't have hotels available";
+  }
+}
+
+
+getHotels(json);
+
+// FILTER COUNTRIES
+
+// FILTER PRICES
+const filterPrices = document.getElementById("prices");
+filterPrices.addEventListener("change", () => {
+  applyFilters();
   section.innerHTML = "";
-  getHotels(consultDate);
+  getHotels(filteredData);
+  
+});
+
+// FILTER DATE
+const dateCheckIn = document.getElementById("checkIn");
+const dateCheckOut = document.getElementById("checkOut");
+const today = new Date();
+
+function zerodate(dateZero) {
+  const converText = "" + dateZero;
+  if (converText.length === 1) {
+    return "0" + dateZero;
+  } else {
+    return dateZero;
+  }
+}
+
+const day = today.getDate();
+const month = today.getMonth() + 1;
+const year = today.getFullYear();
+const dateCheckInHotels = year + "-" + zerodate(month) + "-" + zerodate(day);
+const dateCheckOutHotels =
+  year + "-" + zerodate(month) + "-" + zerodate(day + 1);
+dateCheckIn.setAttribute("min", dateCheckInHotels);
+dateCheckOut.setAttribute("min", dateCheckOutHotels);
+
+dateCheckIn.addEventListener("change", () => {
+  const parts = dateCheckIn.value.split("-");
+  const year = parseInt(parts[0]);
+  const month = parseInt(parts[1]);
+  const day = parseInt(parts[2]);
+  const finalDate = year + "-" + zerodate(month) + "-" + zerodate(day + 1);
+  dateCheckOut.setAttribute("min", finalDate);
+  dateCheckOutSelected = false;
+  applyFilters();
+  section.innerHTML = "";
+  getHotels(filteredData);
+});
+
+function isHotelAvailable(hotel, differenceInMilliseconds) {
+  const availabilityFrom = hotel.availabilityFrom;
+  const availabilityTo = hotel.availabilityTo;
+  const availabilityDifference = availabilityTo - availabilityFrom;
+  return availabilityDifference >= differenceInMilliseconds;
+}
+
+let dateCheckOutSelected = false;
+function calculateDifferenceDays() {
+  const currentDateIni = new Date();
+  currentDateIni.setHours(0, 0, 0, 0);
+  const optionCheckInIni = new Date(dateCheckIn.value + " 00:00:00");
+  optionCheckInIni.setHours(0, 0, 0, 0);
+  const optionCheckIn = optionCheckInIni.getTime();
+
+  if (dateCheckOut.value == "") {
+    return;
+  }
+  const optionCheckOut = new Date(dateCheckOut.value);
+  const millisecondsDate = optionCheckOut - optionCheckIn;
+  const millisecondsInADay = 24 * 60 * 60 * 1000; // 86,400,000
+  return Math.round(millisecondsDate / millisecondsInADay) * millisecondsInADay;
+}
+dateCheckIn.value = "";
+dateCheckOut.value = "";
+
+dateCheckOut.addEventListener("change", () => {
+  dateCheckOutSelected = true;
+  applyFilters();
+  section.innerHTML = "";
+  getHotels(filteredData);
+
 });
 
 //funcion para eliminar filtros
@@ -104,73 +199,4 @@ const buttonFilter = document.getElementById("clear");
 buttonFilter.addEventListener("click", () => {
   section.innerHTML = "";
   getHotels(json);
-});
-
-
-
-
-// filtro fechas
-const fechaEntrada = document.getElementById("checkIn");
-const fechaSalida = document.getElementById("checkOut");
-
-
-// Obtener fecha actual
-const today = new Date();
-
-// Función para agregar un cero inicial si el número es menor a 10
-function addLeadingZero(number) {
-  return number < 10 ? "0" + number : number;
-}
-
-// Calcular fechas de check-in y check-out predeterminadas
-const day = today.getDate();
-const month = today.getMonth() + 1;
-const year = today.getFullYear();
-const hotelesEntrada = `${year}-${addLeadingZero(month)}-${addLeadingZero(day)}`;
-const hotelesSalida = `${year}-${addLeadingZero(month)}-${addLeadingZero(day + 1)}`;
-
-// Establecer atributos mínimos para los campos de fecha
-fechaEntrada.setAttribute("min", hotelesEntrada);
-fechaSalida.setAttribute("min", hotelesSalida);
-
-// Función para verificar si un hotel está disponible
-function HotelReady(hotels, diffSecons) {
-  const AvailFrom = new Date(hotels.availabilityFrom).getTime();
-  const AvailTo = new Date(hotels.availabilityTo).getTime();
-  const AvailDiff = AvailTo - AvailFrom;
-  return AvailDiff >= diffSecons;
-}
-
-// Función para calcular la diferencia en días y filtrar los hoteles disponibles
-let fechaSalidaSelected = false
-function calculateDifferenceDays() {
-  const OptCheckIn = new Date(fechaEntrada.value).getTime();
-  const OptCheckOut = new Date(fechaSalida.value).getTime();
-
-  if (!fechaSalidaSelected) {
-    return;
-  }
-
-  const DayMillis = 24 * 60 * 60 * 1000; 
-  const diffSecons = Math.round((OptCheckOut - OptCheckIn) / DayMillis) * DayMillis;
-
-  const hotelesDisponibles = json.filter((hotel) => {
-    return HotelReady(hotel, diffSecons);
-  });
-
-  section.innerHTML = "";
-
-  if (hotelesDisponibles.length > 0) {
-    getHotels(hotelesDisponibles);
-  } else {
-    section.innerHTML = "¡Lo siento! No hay hoteles disponibles para este rango de fechas.";
-    
-  }
-}
-
-// Establecer listeners de cambio para los campos de fecha
-fechaEntrada.addEventListener("change", calculateDifferenceDays);
-fechaSalida.addEventListener("change", function () {
-  fechaSalidaSelected = true;
-  calculateDifferenceDays();
 });
